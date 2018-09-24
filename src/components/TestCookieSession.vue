@@ -5,8 +5,8 @@
         测试
       </span>
         <el-button type="primary" @click="cookieLogin">发送到 cookieLogin 方法</el-button>
-        <el-button type="primary" @click="loginToDo">登录</el-button>
-        <el-button type="primary" @click="loginToDo">登录</el-button>
+        <el-button type="primary" @click="sessionSet">session set</el-button>
+        <el-button type="primary" @click="sessionGet">session get</el-button>
     </el-col>
   </el-row>
 </template>
@@ -20,6 +20,20 @@ export default {
     }
   },
   methods: {
+    sessionSet () {
+      this.$http.post('/auth/session/set/random', {
+        user: 'test', password: 'pass'
+      }).then(res => {
+        console.log('取到的 res : %O', res.data)
+      })
+    },
+    sessionGet () {
+      this.$http.post('/auth/session/get/random', {
+        user: 'test', password: 'pass'
+      }).then(res => {
+        console.log('取到的 res : %O', res.data)
+      })
+    },
     cookieLogin () {
       this.$http.post('/auth/cookie/login', {
         user: 'test', password: 'pass'
