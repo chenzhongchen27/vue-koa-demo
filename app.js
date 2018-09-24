@@ -10,6 +10,8 @@ import serve from 'koa-static'
 import historyApiFallback from 'koa2-history-api-fallback'
 import koaRouter from 'koa-router'
 import koaBodyparser from 'koa-bodyparser'
+const session = require('koa-session')
+const sessions = require('./sessions')
 
 const app = new Koa()
 const router = koaRouter()
@@ -19,6 +21,12 @@ let port = process.env.PORT
 app.use(koaBodyparser())
 app.use(json())
 app.use(logger())
+
+app.use(session({
+  key: 'koa-vue-demo',
+  store: sessions,
+  maxAge: 8 * 60 * 60 * 1000
+}, app))
 
 app.use(async function (ctx, next) {
   let start = new Date()
