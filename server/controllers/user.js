@@ -37,7 +37,44 @@ const postUserAuth = async function (ctx) {
   }
 }
 
+async function cookieLogin (ctx, next) {
+  let previousUser = ctx.cookies.get('user')
+  //
+  let currentUser = {}
+  if (!previousUser) {
+    currentUser.name = 'sunyuqing'
+    currentUser.count = 1
+  } else {
+    previousUser = JSON.parse(previousUser)
+    currentUser.name = 'sunyuqing'
+    currentUser.count = ++previousUser.count
+  }
+  ctx.cookies.set('user', JSON.stringify(currentUser))
+  ctx.body = {
+    success: true,
+    currentUser
+  }
+}
+async function sessionSetRandom (ctx, next) {
+  ctx.session.random = Math.random()
+  ctx.body = {
+    success: true,
+    random: ctx.session.random
+  }
+}
+
+async function sessionGetRandom (ctx, next) {
+  const random = ctx.session.random
+  ctx.body = {
+    success: true,
+    random: random
+  }
+}
+
 export default {
   getUserInfo,
-  postUserAuth
+  postUserAuth,
+  cookieLogin,
+  sessionSetRandom,
+  sessionGetRandom
 }

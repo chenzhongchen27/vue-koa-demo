@@ -1,13 +1,18 @@
 <template>
   <div id="app">
     <img src="./assets/logo.png">
+    <TestCookieSession></TestCookieSession>
     <router-view></router-view>
   </div>
 </template>
 
 <script>
+import TestCookieSession from './components/TestCookieSession'
 export default {
-  name: 'app'
+  name: 'app',
+  components: {
+    TestCookieSession
+  }
 }
 </script>
 
